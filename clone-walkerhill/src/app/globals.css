@@ -9,10 +9,10 @@ body {
 body {
   word-break: keep-all;
   overflow-y: scroll;
+  background-color: aqua;
+  height: 200vh;
 }
-body::-webkit-scrollbar {
-  display: none;
-}
+
 * {
   box-sizing: border-box;
   padding: 0;
