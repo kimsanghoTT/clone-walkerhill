@@ -1,0 +1,487 @@
+.gnbSub{
+    width: 100%;
+    position: absolute;
+    top: 90px;
+    left: 0;
+}
+.gnbSub.brand, .gnbSub.dining{
+    padding-top: 50px;
+    border-top: none;
+    background: rgba(51, 51, 51, 0.90);
+}
+.gnbSub.brand .closeBtn, .gnbSub.dining .closeBtn{
+    background: url(/source/image/ico/btn_close01.png);
+    width: 26px;
+    height: 26px;
+    border: none;
+    position: absolute;
+    top: 24px;
+    right: 12.5%;
+    cursor: pointer;
+}
+.gnbSub.brand .gnbBrandContainer{
+    margin: 50px auto;
+}
+.gnbSub.brand .brandList{
+    width: 1200px;
+    height: auto;
+    border-top: 0;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+}
+.gnbSub.brand .brandList li{
+    flex-basis: 250px;
+    height: 100px;
+    border-top: 1px solid rgba(255, 255, 255, 0.20);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.20);
+    border-left: 1px solid rgba(255, 255, 255, 0.20);
+}
+.gnbSub.brand .brandList li:nth-last-of-type(3){
+    margin-right: 10px;
+}
+.gnbSub.brand .brandList li:nth-last-of-type(3),
+.gnbSub.brand .brandList li:last-of-type{
+    border-right: 1px solid rgba(255, 255, 255, 0.20);
+}
+.gnbSub.brand .brandList li a{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .3s linear;
+}
+.gnbSub.brand .brandList li a:hover{
+    background-color: #fff;
+}
+.gnbSub.brand .gnbBrandContainer > div{
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 35px;
+}
+.gnbSub.brand .brandBook{
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+.gnbSub.brand .brandBook::after{
+    background: url(/source/image/ico/ico_arrow01.png)no-repeat center;
+    content: '';
+    width: 26px;
+    height: 7px;
+    margin-left: 8px;
+    display: inline-block;
+}
+
+.gnbSub.dining .gnbDiningContainer{
+    margin: 50px auto;
+}
+.gnbSub.dining .diningList{
+    display: flex;
+    flex-wrap: wrap;
+    width: 1200px;
+    margin: 0 auto;
+}
+.gnbSub.dining .diningList li{
+    width: 20%;
+    height: 100px;
+    border-top: 1px solid rgba(255, 255, 255, 0.20);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.20);
+    border-left: 1px solid rgba(255, 255, 255, 0.20);
+}
+.gnbSub.dining .diningList li:nth-of-type(5),
+.gnbSub.dining .diningList li:last-of-type{
+    border-right: 1px solid rgba(255, 255, 255, 0.20);
+}
+.gnbSub.dining .diningList li a{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .3s linear;
+}
+.gnbSub.dining .diningList li a:hover{
+    background-color: #fff;
+}
+.gnbSub.dining .gnbDiningContainer > div{
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.gnbSub.dining .diningBook{
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+.gnbSub.dining .diningBook::after{
+    background: url(/source/image/ico/ico_arrow01.png)no-repeat center;
+    content: '';
+    width: 26px;
+    height: 7px;
+    margin-left: 8px;
+    display: inline-block;
+}
+.gnbSub.dining .gnbDiningContainer > div > a{
+    width: 240px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    background: url(/source/image/brand_logo/txt_matinaLounge01_off.png) no-repeat center;
+    transition: .3s linear;
+}
+.gnbSub.dining .gnbDiningContainer > div > a:hover{
+    background: #fff url(/source/image/brand_logo/txt_matinaLounge01_on.png) no-repeat center;
+}
+.gnbSub.activity, .gnbSub.book, .gnbSub.myInfo{
+    border-top: 2px solid #333;
+    background: rgba(255, 255, 255, 0.95);   
+}
+.gnbSub.activity .closeBtn, .gnbSub.book .closeBtn, .gnbSub.myInfo .closeBtn{
+    background: url(/source/image/ico/btn_close02.png);
+    width: 26px;
+    height: 26px;
+    border: none;
+    position: absolute;
+    top: 24px;
+    right: 12.5%;
+    cursor: pointer;
+}
+.gnbSub.activity .gnbActivityContainer{
+    margin: 50px auto;
+    display: table;
+    height: 190px;
+    display: flex;
+    justify-content: center;
+}
+.gnbActivityContainer .activityNote, .gnbActivityContainer .activityLink, .gnbActivityContainer .blank{
+    border-right: 1px solid #bcbcbc;
+    width: 400px;
+    padding: 6px 70px 15px 50px;
+}
+.gnbActivityContainer .blank{
+    border: none;
+    width: 300px;
+}
+.gnbActivityContainer .activityNote a{
+    margin: 6px 0 18px 0;
+    color: #333;
+    font-size: 16px;
+    display: block;
+}
+.gnbActivityContainer .activityNote p{
+    font-size: 12px;
+    color: #666;
+    margin-top: -2px;
+    padding: 16px 0 0 7px;
+    border-top: 1px solid #ddd;
+    line-height: 13px;
+    font-weight: 400;
+}
+.gnbActivityContainer .activityNote p::before{
+    content: "*";
+    display: inline-block;
+    width: 7px;
+    margin: 0 0 0 -7px;
+    vertical-align: -3px;
+}
+.gnbActivityContainer .activityLink a{
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin: 6px 0 18px 0;
+}
+.gnbSub.book .gnbBookContainer{
+    display: table;
+    margin: 50px auto;
+}
+.gnbBookContainer .bookLink, .gnbBookContainer .bookPromotion, .gnbBookContainer .blank{
+    display: table-cell;
+    width: 400px;
+    padding: 6px 50px 15px 50px;
+}
+.gnbBookContainer .bookLink{
+    width: 300px;
+    padding: 6px 50px 15px 70px;
+    border-right: 1px solid #bcbcbc;
+    font-size: 16px;
+    font-weight: 500;
+}
+.gnbBookContainer .bookLink li{
+    margin: 6px 0 18px;
+}
+.gnbBookContainer .bookLink li a{
+    color: #333;
+}
+.gnbBookContainer .bookLink p{
+    color: #666;
+    font-weight: 400;
+    font-size: 12px;
+    padding: 16px 0 0 7px;
+    border-top: 1px solid #ddd;
+    line-height: 13px;
+}
+.gnbBookContainer .bookLink p::before{
+    content: "*";
+    display: inline-block;
+    width: 7px;
+    margin: 0 0 0 -7px;
+    vertical-align: -3px;
+}
+.gnbBookContainer .bookPromotion{
+    font-size: 16px;
+    border-right: 1px solid #bcbcbc;
+}
+.gnbBookContainer .bookPromotion li{
+    margin: 6px 0 18px;
+}
+.gnbBookContainer .bookPromotion .PromotionTagList{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.gnbBookContainer .bookPromotion .PromotionTagList a{
+    width: 80px;
+    height: 35px;
+    line-height: 33px;
+    text-align: center;
+    border: 1px solid #adadad;
+    color: #777;
+    transition: .2s linear;
+}
+.gnbBookContainer .bookPromotion .PromotionTagList a:hover{
+    background-color: #333;
+    color: #fff;
+}
+.gnbSub.myInfo .gnbLoginContainer {
+    display: table;
+    margin: 50px auto;
+    color: #333;
+}
+.gnbLoginContainer .benefit, .gnbLoginContainer .loginBox, .gnbLoginContainer .blank{
+    width: 400px;
+    padding: 6px 70px 15px;
+    display: table-cell;
+}
+.gnbLoginContainer .benefit, .gnbLoginContainer .loginBox{
+    border-right: 1px solid #bcbcbc;
+    text-align: center;
+}
+.gnbLoginContainer .benefit h4{
+    margin: 6px 0 18px;
+    font-size: 19px;
+    letter-spacing: -1px;
+    text-align: left;
+}
+.benefit ul{
+    margin-bottom: 16px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #c1c1c1;
+    text-align: left;
+}
+.benefit ul li{
+    padding-left: 18px;
+    font-size: 14px;
+    color: #777;
+    font-weight: 400px;
+}
+.benefit ul li::before{
+    width: 10px;
+    height: 8px;
+    margin: 0 8px 0 -18px;
+    background: url(/source/image/ico/blt_check01.png) 0 0 no-repeat;
+    content: "";
+    vertical-align: 1px;
+    display: inline-block;
+}
+.benefit a:first-of-type{
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+    display: inline-block;
+}
+.benefit a:first-of-type::after{
+    height: 1px;
+    background: #333;
+    display: block;
+    content: '';
+}
+.benefit a:last-of-type{
+    margin-top: 18px;
+    display: inline-block;
+    line-height: 43px;
+    background: #6c7594;
+    height: 45px;
+    padding: 0 20px;
+    color: #fff;
+    width: 100%;
+    font-size: 16px;
+}
+.loginBox .loginTab{
+    display: flex;
+}
+.loginBox .loginTab span{
+    font-size: 14px;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #333;
+    cursor: pointer;
+    height: 36px;
+    flex: 1;
+    line-height: 36px;
+}
+.loginBox .loginTab span.on{
+    border: 1px solid #333;
+    border-bottom: 1px solid transparent;
+}
+.loginBox .loginForm{
+    margin-top: 15px;
+}
+.loginBox .inputBox{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.loginBox .inputBox label{
+    display: none;
+}
+.loginBox .inputBox input{
+    display: block;
+    width: 100%;
+    height: 46px;
+    padding: 0 20px;
+    border: 1px solid #e5e9ec;
+    outline: 0;
+    color: #666;
+}
+.loginBox .inputBox.error{
+    border-color: #e07b46;
+}
+.loginBox .inputBox button{
+    background: #333;
+    height: 45px;
+    width: 100%;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+    text-align: center;
+    vertical-align: middle;
+    border: none;
+}
+.loginBox .loginUtil{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    gap: 8px;
+    color: #666;
+    margin-top: 12px;
+    width: 100%;
+    word-break: break-all;
+}
+.loginBox .loginUtil input{
+    display: none;
+}
+.loginBox .loginUtil label{
+    padding-left: 24px;
+    position: relative;
+    cursor: pointer;
+}
+.loginBox .loginUtil label::before{
+    content: '';
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid #ddd;
+    background: #eee;
+    transition: background-color .2s linear, border-color .2s linear;
+}
+.loginBox .loginUtil label::after{
+    position: absolute;
+    left: 4px;
+    top: 5px;
+    width: 8px;
+    height: 4px;
+    border-bottom: 3px solid #ddd;
+    border-left: 3px solid #ddd;
+    transform: rotate(-45deg);
+    font-weight: 900;
+    font-size: 11px;
+    content: "";
+    transition: border-color .2s linear;
+}
+.loginBox .loginUtil label.checked::before{
+    border-color: #768396;
+    background: #768396;
+}
+.loginBox .loginUtil label.checked::after{
+    border-color: #fff;
+}
+.loginBox .loginUtil a{
+    color: #666;
+}
+.loginBox .loginUtil a::before{
+    width: 3px;
+    height: 3px;
+    margin-right: 4px;
+    background: #6c7594;
+    vertical-align: 4px;
+    content: '';
+    display: inline-block;
+}
+.loginBox .snsLogin{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14px;
+    gap: 1px;
+}
+.loginBox .snsLogin .snsLoginBtn{
+    height: 35px;
+    flex: 1;
+    border: none;
+}
+.snsLogin .snsLoginBtn.naver{
+    background-color: #1ec800;
+}
+.snsLogin .snsLoginBtn .ico{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
+.snsLogin .snsLoginBtn.naver .ico{
+    background: url(/source/image/ico/sns_naver01.png) no-repeat center;
+}
+.snsLogin .snsLoginBtn.kakao{
+    background-color: #fae100;
+}
+.snsLogin .snsLoginBtn.kakao .ico{
+    background: url(/source/image/ico/sns_kakaoTalk02.png) no-repeat center;
+}
+.snsLogin .snsLoginBtn.google{
+    background-color: #ddd;
+}
+.snsLogin .snsLoginBtn.google .ico{
+    background: url(/source/image/ico/sns_google02.png) no-repeat center;
+}
+.snsLogin .snsLoginBtn.apple{
+    background-color: #333;
+}
+.snsLogin .snsLoginBtn.apple .ico{
+    background: url(/source/image/ico/sns_apple01.png) no-repeat center;
+}
+    

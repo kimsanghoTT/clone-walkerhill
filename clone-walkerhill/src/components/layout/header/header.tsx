@@ -5,12 +5,14 @@ import { gnbList } from "../data/constant";
 import styles from "./header.module.css";
 import Link from "next/link";
 import GnbSub from "./sub_components/header_gnb_sub";
+import AllMenu from "./sub_components/header_all_menu";
 
 const Header = () => {
     const langRef = useRef<HTMLLIElement>(null);
     const [activeGnb, setActiveGnb] = useState<string | null>(null);
     const [openLangList, setOpenLangList] = useState(false);
     const [selectedLang, setSelectedLang] = useState<string>("KOR");
+    const [openAllMenu, setOpenAllMenu] = useState(false);
     const language = ["KOR", "ENG", "CHI", "JPN"];
 
     useEffect(() => {
@@ -29,6 +31,11 @@ const Header = () => {
         }
     },[])
 
+    useEffect(() => {
+        if (openAllMenu) document.documentElement.classList.add("block");
+        else document.documentElement.classList.remove("block");
+    }, [openAllMenu]);
+
     const handleActiveGub = (type:string | null) => {
         setActiveGnb(prev => (prev === type ? null : type));
     }
@@ -39,8 +46,12 @@ const Header = () => {
         setOpenLangList(prev => !prev);
     }
 
+    const handleAllMenu = () => {
+        setOpenAllMenu(prev => !prev);
+    }
+
     return (
-        <header className={styles.headerContainer}>
+        <header className={`${styles.headerContainer} ${activeGnb !== null ? styles.active : ""}`}>
             <div className={styles.logoBox}>
                 <h1 className={styles.logo}>
                     <Link href="/"><span className="hidden">로고</span></Link>
@@ -71,10 +82,11 @@ const Header = () => {
                         )}
                     </li>
                     <li className={styles.mainMenu}>
-                        <button className={styles.mainMenuBtn}><span className="hidden">메인메뉴버튼</span></button>
+                        <button className={styles.mainMenuBtn} onClick={handleAllMenu}><span className="hidden">메인메뉴버튼</span></button>
                     </li>
                 </ul>
             </nav>
+            {openAllMenu && <AllMenu handleAllMenu={handleAllMenu}/>}
         </header>
     )
 }
