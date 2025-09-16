@@ -444,6 +444,25 @@
     content: '';
     display: inline-block;
 }
+.loginBox .inputBox ul{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.loginBox .inputBox ul li{
+    display: flex;
+    align-items: center;
+}
+.loginBox .inputBox ul li input{
+    flex: 1;
+}
+.loginBox .inputBox ul li button{
+    width: 87px;
+    font-size: 12px;
+}
+.loginBox .inputBox ul li:last-child button{
+    opacity: 0.5;
+}
 .loginBox .snsLogin{
     display: flex;
     justify-content: space-between;

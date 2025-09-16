@@ -9,7 +9,6 @@
     padding-left: 100px;
     background: transparent;
     transition: background-color .3s linear;
-    position: relative;
 }
 .headerContainer:hover{
     background-color: #fff;
