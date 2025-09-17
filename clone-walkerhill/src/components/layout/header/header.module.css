@@ -70,6 +70,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    position: relative;
 }
 .gnb .gnbItem .gnbBtn::after{
     content: '';
@@ -79,6 +80,15 @@
     background: url(/source/image/ico/ico_fold01.png) no-repeat 0 0;
     margin-top: 2px;
     transition: background-position 0.1s linear;
+}
+.gnb .gnbItem.active .gnbBtn::before{
+    content: '';
+    position: absolute;
+    display: block;
+    height: 1px;
+    background-color: #fff;
+    width: 100%;
+    bottom: -6px;
 }
 .gnb .gnbItem.active .gnbBtn::after{
     background-position: 0 100%;

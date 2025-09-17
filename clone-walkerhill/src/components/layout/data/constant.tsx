@@ -193,3 +193,11 @@ export const dining = [
         alt:"ondal"
     },
 ]
+
+export const errMsg = {
+    REQUIRE_ID: "아이디 또는 리워즈 멤버십 회원정보는 필수정보 입니다.",
+    REQUIRE_PW: "비밀번호는 필수정보 입니다.",
+    REQUIRE_PHONE: "휴대폰번호는 필수정보 입니다.",
+    NOT_NUMBER:  "숫자만 입력해 주세요.",
+    NOT_AUTH: "아이디 또는 비밀번호가 일치하지 않습니다."
+}
