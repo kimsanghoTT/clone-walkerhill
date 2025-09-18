@@ -368,7 +368,7 @@
     outline: 0;
     color: #666;
 }
-.loginBox .inputBox.error{
+.loginBox .inputBox input.error{
     border-color: #e07b46;
 }
 .loginBox .inputBox button{

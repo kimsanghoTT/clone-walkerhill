@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "./header_gnb_sub.module.css";
+import styles from "../css/header_gnb_sub.module.css";
 import { brands, dining } from "../../data/constant";
 import { useState } from "react";
 import GnbSubLogin from "./header_gnb_sub_login";

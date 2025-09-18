@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "./header_all_menu.module.css"
+import styles from "../css/header_all_menu.module.css"
 import { allMenuLinks, allMenuGridItems } from "../../data/constant";
 import Image from "next/image";
 import { useState } from "react";

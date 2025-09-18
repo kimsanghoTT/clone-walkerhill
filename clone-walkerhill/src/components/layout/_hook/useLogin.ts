@@ -1,63 +1,94 @@
-import { RefObject, useState } from "react";
+import { useState } from "react";
 import { errMsg } from "../data/constant";
 
 interface Props{
-    errMsgRef: RefObject<HTMLParagraphElement | null>;
     checkMemorize: boolean;
+    loginMethod: string;
 }
 
 interface LoginState{
+    name?: string;
     id?: string;
     pw?: string;
     phone?: string;
-    phoneAuth?: number;
+    authCode?: number;
 }
 
-const useLogin = ({errMsgRef, checkMemorize}: Props) => {
+
+
+const useLogin = ({checkMemorize, loginMethod}: Props) => {
     const [login, setLogin] = useState<LoginState>({});
+    const [error, setError] = useState<string>("");
+    const [firstPhoneAuth, setFirstPhoneAuth] = useState<boolean>(false);
     const [openPhoneAuthModal, setOpenPhoneAuthModal] = useState<boolean>(false);
 
     const handleLoginInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
         if(name === "phone" && value.length > 11) return;
-        if(name === "phoneAuth" && value.length > 6) return;
+        if(name === "authCode" && value.length > 4) return;
 
-        setLogin(prev => ({ ...prev, [name]: name === "phoneAuth" ? Number(value) : value }));
+        setLogin(prev => { 
+            const loginInput = {...prev, [name]: name === "authCode" ? Number(value) : value};
+            
+            if(loginInput.id && !loginInput.pw) setError(errMsg.REQUIRE_PW);
+            else if(!loginInput.id && loginInput.pw) setError(errMsg.REQUIRE_ID);
+            else setError("");
+            
+            return loginInput;
+        });
 
         if(name === "id" && checkMemorize) localStorage.setItem("memorizeId", value);
 
-        if(errMsgRef.current) {
-            if(name === "id" && value.length === 0) errMsgRef.current.textContent = errMsg.REQUIRE_ID;
-            else if(name === "pw" && value.length === 0) errMsgRef.current.textContent = errMsg.REQUIRE_PW;
-            else errMsgRef.current.textContent = "";
-        }
     };
 
     const requestAuthCode = () => {
         const phoneNumber = login.phone?.trim();
 
-        if(phoneNumber?.length === 0 && errMsgRef.current) {
-            errMsgRef.current.textContent = errMsg.REQUIRE_PHONE;
+        if (!phoneNumber) {
+            setError(errMsg.REQUIRE_PHONE);
             return;
         }
 
-        if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
-            if (errMsgRef.current) {
-                errMsgRef.current.textContent = !phoneNumber ? errMsg.REQUIRE_PHONE : errMsg.NOT_NUMBER;
-            }
+        if (!/^\d+$/.test(phoneNumber)) {
+            setError(errMsg.NOT_NUMBER);
+            setLogin(prev => ({...prev, phone: ""}));
             return;
         }
 
-        if (errMsgRef.current) errMsgRef.current.textContent = "";
-        setOpenPhoneAuthModal(true);
+        const authCode = Math.floor(1000 + Math.random() * 9000);
+
+        setError("");
+        if(!firstPhoneAuth) setOpenPhoneAuthModal(true);
     }
 
     const handleLogin = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(errMsgRef.current) errMsgRef.current.textContent = errMsg.NOT_AUTH;
+
+        if(loginMethod === "email") {
+            if(!login.id) {
+                setError(errMsg.REQUIRE_ID);
+                return;
+            } 
+            if(!login.pw) {
+                setError(errMsg.REQUIRE_PW);
+                return;
+            } 
+        }
+        else if(loginMethod === "phone") {
+            if(!login.phone){
+                setError(errMsg.REQUIRE_PHONE);
+                return;
+            }
+            if (!/^\d+$/.test(login.phone)) {
+                setError(errMsg.NOT_NUMBER);
+                setLogin(prev => ({...prev, phone: ""}));
+                return;
+            }
+        } 
+        
     }
 
-    return {login, setLogin, handleLogin, handleLoginInput, requestAuthCode, openPhoneAuthModal}
+    return {login, error, setError, setLogin, handleLogin, handleLoginInput, requestAuthCode, openPhoneAuthModal}
 }
 export default useLogin;

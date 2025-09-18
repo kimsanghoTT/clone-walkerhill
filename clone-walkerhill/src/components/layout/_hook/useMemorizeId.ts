@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 
 interface LoginState{
+    name?: string;
     id?: string;
     pw?: string;
     phone?: string;
-    phoneAuth?: number;
+    authCode?: number;
 }
 
 interface Props{

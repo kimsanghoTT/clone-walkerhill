@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gnbList } from "../data/constant";
-import styles from "./header.module.css";
+import styles from "./css/header.module.css";
 import Link from "next/link";
 import GnbSub from "./sub_components/header_gnb_sub";
 import AllMenu from "./sub_components/header_all_menu";

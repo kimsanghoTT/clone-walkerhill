@@ -199,5 +199,6 @@ export const errMsg = {
     REQUIRE_PW: "비밀번호는 필수정보 입니다.",
     REQUIRE_PHONE: "휴대폰번호는 필수정보 입니다.",
     NOT_NUMBER:  "숫자만 입력해 주세요.",
-    NOT_AUTH: "아이디 또는 비밀번호가 일치하지 않습니다."
+    NOT_AUTH: "아이디 또는 비밀번호가 일치하지 않습니다.",
+    NOT_AUTHCODE: "인증번호 받기 버튼을 클릭하세요."
 }

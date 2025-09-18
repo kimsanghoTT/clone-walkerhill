@@ -1,8 +1,10 @@
 import { useRef, useState } from "react";
-import styles from "./header_gnb_sub.module.css";
+import styles from "../css/header_gnb_sub.module.css";
 import Link from "next/link";
 import useMemorizeId from "../../_hook/useMemorizeId";
 import useLogin from "../../_hook/useLogin";
+import { errMsg } from "../../data/constant";
+import PhoneAuthModal from "./header_phone_auth_modal";
 
 interface Props{
     selectedTab: string;
@@ -12,14 +14,13 @@ interface Props{
 const GnbSubLogin = ({selectedTab, onClose }:Props) => {
     const [loginMethod, setLoginMethod] = useState<string>("email");
     const [checkMemorize, setCheckMemorize] = useState<boolean>(false);
-    const errMsgRef = useRef<HTMLParagraphElement | null>(null);
 
-    const {login, setLogin, handleLogin, handleLoginInput, openPhoneAuthModal, requestAuthCode} = useLogin({errMsgRef, checkMemorize});
+    const {login, error, setError, setLogin, handleLogin, handleLoginInput, openPhoneAuthModal, requestAuthCode} = useLogin({checkMemorize, loginMethod});
     const {handleIdMemorize} = useMemorizeId({login, setLogin, setCheckMemorize});
 
     const handleLoginTab = (type:string) => {
         setLoginMethod(type);
-        if(errMsgRef.current) errMsgRef.current.textContent = "";
+        setError("");
     }
 
     return(
@@ -50,35 +51,48 @@ const GnbSubLogin = ({selectedTab, onClose }:Props) => {
                             {loginMethod === "email" ? (
                                 <>
                                     <label htmlFor="id">아이디</label>
-                                    <input type="text" id="id" name="id" value={login.id || ''} 
-                                    onChange={(e) => handleLoginInput(e)} placeholder="아이디 또는 이메일"/>
+                                    <input 
+                                        type="text" id="id" name="id" value={login.id || ''} 
+                                        className={error === errMsg.REQUIRE_ID? `${styles.error}` : ""}
+                                        onChange={(e) => handleLoginInput(e)} placeholder="아이디 또는 이메일"
+                                    />
 
                                     <label htmlFor="pw">비밀번호</label>
-                                    <input type="password" id="pw" name="pw" value={login.pw || ''} 
-                                    onChange={(e) => handleLoginInput(e)} placeholder="비밀번호"/>                                    
+                                    <input 
+                                        type="password" id="pw" name="pw" value={login.pw || ''} 
+                                        className={error === errMsg.REQUIRE_PW? `${styles.error}` : ""}
+                                        onChange={(e) => handleLoginInput(e)} placeholder="비밀번호"
+                                    />                                    
                                 </>
                             ) : (
                                 <>
                                     <ul>
                                         <li>
-                                            <input type="text" id="phone" name="phone" value={login.phone || ''} 
-                                            onChange={(e) => handleLoginInput(e)} placeholder="- 없이 입력해 주세요"/>
+                                            <input 
+                                                type="text" 
+                                                id="phone" 
+                                                name="phone" 
+                                                value={login.phone || ''} 
+                                                onChange={(e) => handleLoginInput(e)} 
+                                                placeholder="- 없이 입력해 주세요"
+                                                disabled={openPhoneAuthModal ? true : false}
+                                                className={error === errMsg.REQUIRE_PHONE || error === errMsg.NOT_NUMBER ? `${styles.error}` : ""}
+                                            />
                                             <button type="button" onClick={requestAuthCode}>인증번호 받기</button>
                                         </li>
                                         <li>
-                                            <input type="text" id="phoneAuth" name="phoneAuth" value={login.phoneAuth || ''}
+                                            <input type="text" id="authCode" name="authCode" value={login.authCode || ''}
                                             onChange={(e) => handleLoginInput(e)} placeholder="인증번호"/>
                                             <button type="button" onClick={requestAuthCode}>재발송</button>
                                         </li>
                                     </ul>
-                                    
+                                    {openPhoneAuthModal && <PhoneAuthModal/>}
                                 </>
                             )}
-
                             <button className={styles.loginBtn}><span>로그인</span></button>
                         </div>
                     </form>
-                    <p ref={errMsgRef} className={`${styles.loginError}`}></p>
+                    <p className={`${styles.loginError}`}>{error}</p>
                     {loginMethod === "email" && (
                         <div className={styles.loginUtil}>
                             <div className={styles.memorizeId}>
