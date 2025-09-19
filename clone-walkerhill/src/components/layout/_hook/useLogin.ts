@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { errMsg } from "../data/constant";
 
 interface Props{
@@ -14,15 +14,14 @@ interface LoginState{
     authCode?: number;
 }
 
-
-
 const useLogin = ({checkMemorize, loginMethod}: Props) => {
     const [login, setLogin] = useState<LoginState>({});
     const [error, setError] = useState<string>("");
     const [firstPhoneAuth, setFirstPhoneAuth] = useState<boolean>(false);
     const [openPhoneAuthModal, setOpenPhoneAuthModal] = useState<boolean>(false);
+    const [authCode, setAuthCode] = useState<number | null>(null);
 
-    const handleLoginInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleLoginInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
         if(name === "phone" && value.length > 11) return;
@@ -40,29 +39,43 @@ const useLogin = ({checkMemorize, loginMethod}: Props) => {
 
         if(name === "id" && checkMemorize) localStorage.setItem("memorizeId", value);
 
-    };
+    },[checkMemorize]);
 
-    const requestAuthCode = () => {
+    const requestAuthCode = useCallback((setModalError?:Dispatch<SetStateAction<string>>): boolean => {
         const phoneNumber = login.phone?.trim();
 
+        console.log(openPhoneAuthModal);
+        
+
+        if(openPhoneAuthModal && !login.name){
+            if(setModalError) setModalError(errMsg.REQUIRED);
+            return false;
+        }   
+
         if (!phoneNumber) {
+            if(setModalError) setModalError(errMsg.REQUIRE_PHONE);
             setError(errMsg.REQUIRE_PHONE);
-            return;
+            return false;
         }
 
         if (!/^\d+$/.test(phoneNumber)) {
+            if(setModalError) setModalError(errMsg.NOT_NUMBER);
             setError(errMsg.NOT_NUMBER);
-            setLogin(prev => ({...prev, phone: ""}));
-            return;
+            setLogin(prev => ({ ...prev, phone: "" }));
+            return false;
         }
 
-        const authCode = Math.floor(1000 + Math.random() * 9000);
+        const generateAuthCode = Math.floor(1000 + Math.random() * 9000);
+        setAuthCode(generateAuthCode);
+        console.log("인증번호 : " + generateAuthCode);
 
+        if(setModalError) setModalError("");
         setError("");
-        if(!firstPhoneAuth) setOpenPhoneAuthModal(true);
-    }
 
-    const handleLogin = (e:React.FormEvent<HTMLFormElement>) => {
+        return true;
+    }, [login.name, login.phone]);
+
+    const handleLogin = useCallback((e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if(loginMethod === "email") {
@@ -85,10 +98,25 @@ const useLogin = ({checkMemorize, loginMethod}: Props) => {
                 setLogin(prev => ({...prev, phone: ""}));
                 return;
             }
+            if(login.authCode !== authCode){
+
+            }
         } 
         
-    }
+    },[authCode, loginMethod, login]);
 
-    return {login, error, setError, setLogin, handleLogin, handleLoginInput, requestAuthCode, openPhoneAuthModal}
+    return {
+        login,
+        setLogin,
+        error,
+        setError,
+        openPhoneAuthModal,
+        setOpenPhoneAuthModal,
+        firstPhoneAuth,
+        setAuthCode,
+        handleLogin,
+        handleLoginInput,
+        requestAuthCode,
+    };
 }
 export default useLogin;

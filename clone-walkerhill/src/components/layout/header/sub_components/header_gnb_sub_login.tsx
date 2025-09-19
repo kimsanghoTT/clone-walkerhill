@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../css/header_gnb_sub.module.css";
 import Link from "next/link";
 import useMemorizeId from "../../_hook/useMemorizeId";
 import useLogin from "../../_hook/useLogin";
 import { errMsg } from "../../data/constant";
 import PhoneAuthModal from "./header_phone_auth_modal";
+import useAuthTimer from "../../_hook/useAuthTimer";
 
 interface Props{
     selectedTab: string;
@@ -14,14 +15,52 @@ interface Props{
 const GnbSubLogin = ({selectedTab, onClose }:Props) => {
     const [loginMethod, setLoginMethod] = useState<string>("email");
     const [checkMemorize, setCheckMemorize] = useState<boolean>(false);
+    const [blockInput, setBlockInput] = useState<boolean>(false);
 
-    const {login, error, setError, setLogin, handleLogin, handleLoginInput, openPhoneAuthModal, requestAuthCode} = useLogin({checkMemorize, loginMethod});
+    //커스텀 훅
+    const {
+        login, setLogin, error, setError, openPhoneAuthModal, setOpenPhoneAuthModal, handleLogin, handleLoginInput, requestAuthCode,
+        firstPhoneAuth, setAuthCode
+    } 
+    = useLogin({checkMemorize, loginMethod});
+
     const {handleIdMemorize} = useMemorizeId({login, setLogin, setCheckMemorize});
+
+    const {min, sec, isTimerActive, resendEnabled, startTimer, timerExpired} = useAuthTimer();
+
+
+    useEffect(() => {
+        if (openPhoneAuthModal) document.documentElement.classList.add("block");
+        else document.documentElement.classList.remove("block");
+    }, [openPhoneAuthModal]);
+
+    useEffect(() => {
+        if(timerExpired) {
+            setAuthCode(null);
+            alert("인증 유효시간이 만료되었습니다.");
+        }
+    },[timerExpired, setAuthCode])
 
     const handleLoginTab = (type:string) => {
         setLoginMethod(type);
         setError("");
     }
+
+    const handleAuthCode = () => {
+        const generateAuthCode = requestAuthCode();
+
+        if(!firstPhoneAuth && generateAuthCode){
+            setOpenPhoneAuthModal(true);
+            return;
+        }
+        
+        if(generateAuthCode){
+            alert("인증번호가 발송되었습니다.");
+            startTimer();
+            setBlockInput(true);
+        }
+    }
+
 
     return(
         <div className={`${styles.gnbSub} ${styles[selectedTab]}`}>
@@ -75,18 +114,33 @@ const GnbSubLogin = ({selectedTab, onClose }:Props) => {
                                                 value={login.phone || ''} 
                                                 onChange={(e) => handleLoginInput(e)} 
                                                 placeholder="- 없이 입력해 주세요"
-                                                disabled={openPhoneAuthModal ? true : false}
+                                                disabled={blockInput ? true : false}
                                                 className={error === errMsg.REQUIRE_PHONE || error === errMsg.NOT_NUMBER ? `${styles.error}` : ""}
                                             />
-                                            <button type="button" onClick={requestAuthCode}>인증번호 받기</button>
+                                            <button type="button" onClick={handleAuthCode} disabled={resendEnabled}>인증번호 받기</button>
                                         </li>
                                         <li>
-                                            <input type="text" id="authCode" name="authCode" value={login.authCode || ''}
-                                            onChange={(e) => handleLoginInput(e)} placeholder="인증번호"/>
-                                            <button type="button" onClick={requestAuthCode}>재발송</button>
+                                            <input 
+                                                type="text" 
+                                                id="authCode" 
+                                                name="authCode" 
+                                                value={login.authCode || ''}
+                                                onChange={(e) => handleLoginInput(e)} 
+                                                placeholder="인증번호"
+                                            />
+                                            {isTimerActive && <span>{min}:{sec}</span>}
+                                            <button type="button" onClick={handleAuthCode} disabled={!resendEnabled}>재발송</button>
                                         </li>
                                     </ul>
-                                    {openPhoneAuthModal && <PhoneAuthModal/>}
+                                    {openPhoneAuthModal && 
+                                        <PhoneAuthModal 
+                                            login={login} 
+                                            handleLoginInput={handleLoginInput} 
+                                            requestAuthCode={requestAuthCode} 
+                                            setOpenPhoneAuthModal={setOpenPhoneAuthModal} 
+                                            setAuthCode={setAuthCode}
+                                        />
+                                    }
                                 </>
                             )}
                             <button className={styles.loginBtn}><span>로그인</span></button>

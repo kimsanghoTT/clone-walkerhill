@@ -456,6 +456,7 @@
 .loginBox .inputBox ul li{
     display: flex;
     align-items: center;
+    position: relative;
 }
 .loginBox .inputBox ul li input{
     flex: 1;
@@ -464,8 +465,17 @@
     width: 87px;
     font-size: 12px;
 }
-.loginBox .inputBox ul li:last-child button{
+.loginBox .inputBox ul li button[disabled]{
     opacity: 0.5;
+    cursor: default;
+}
+.loginBox .inputBox .authTimer{
+    color: #e07b46;
+    position: absolute;
+    right: 90px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -1px;
 }
 .loginBox .loginError{
     color: #e07b46;
